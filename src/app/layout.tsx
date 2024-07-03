@@ -1,9 +1,8 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
 import React from 'react'
-
-const inter = Inter({ subsets: ['latin'] })
+import SideBarComponent from '@/components/app/side-bar/side-bar-component'
+import { chatList } from '@/_mocks/chat-list'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -17,7 +16,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={inter.className}>{children}</body>
+      <body className='w-full flex flex-col' id='body'>
+        <main className='flex flex-1  w-full '>
+          <SideBarComponent chatList={chatList} />
+          <div className='max-w-screen-2xl w-full'>{children}</div>
+        </main>
+      </body>
     </html>
   )
 }
