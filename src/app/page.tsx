@@ -1,7 +1,12 @@
+import Login from '@/components/app/login-component'
 import React from 'react'
 
 function Page() {
-  return <div>Page</div>
+  return (
+    <div>
+      <Login />
+    </div>
+  )
 }
 
 export default Page
