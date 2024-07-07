@@ -21,4 +21,5 @@ export type User = {
 export type MessageSended = {
   username: string
   message: string
+  avatar?: string
 }

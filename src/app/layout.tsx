@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import React from 'react'
-import SideBarComponent from '@/components/app/side-bar/side-bar-component'
-import { chatList } from '@/_mocks/chat-list'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -17,9 +15,8 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className='w-full flex flex-col' id='body'>
-        <main className='flex flex-1  w-full '>
-          <SideBarComponent chatList={chatList} />
-          <div className='max-w-screen-2xl w-full'>{children}</div>
+        <main className='flex'>
+          <div className='w-screen'>{children}</div>
         </main>
       </body>
     </html>
