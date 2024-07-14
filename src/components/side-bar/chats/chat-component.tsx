@@ -28,12 +28,18 @@ function ChatComponent({ chat, isMobile }: Props) {
           <Link
             href={`/chat-view/${chat.chatId}`}
             className={cn(
-              'h-12 w-full flex justify-center items-center md:h-16 md:w-16 dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white hover:bg-blue-100 rounded-md',
-              chat.chatId.toString() === getChatId() && 'bg-blue-100'
+              'h-12 w-full flex justify-center items-center md:h-16 md:w-16 dark:bg-muted dark:text-muted-foreground hover:bg-hoveredButton rounded-md',
+              chat.chatId.toString() === getChatId() && 'bg-hoveredButton'
             )}
           >
             <Avatar className='flex justify-center items-center'>
-              <AvatarImage src={DEFAULT_IMAGE} alt={chat.chatName ?? ''} width={6} height={6} className='w-10 h-10 ' />
+              <AvatarImage
+                src={chat.image || DEFAULT_IMAGE}
+                alt={chat.chatName ?? ''}
+                width={6}
+                height={6}
+                className='w-10 h-10 '
+              />
             </Avatar>{' '}
             <span className='sr-only'>{chat.chatName}</span>
           </Link>
@@ -48,15 +54,21 @@ function ChatComponent({ chat, isMobile }: Props) {
       key={chat.chatId}
       href={`/chat-view/${chat.chatId}`}
       className={cn(
-        'flex gap-1 w-full px-3 py-3 rounded-md hover:bg-blue-100',
-        chat.chatId.toString() === getChatId() && 'bg-blue-100'
+        'flex gap-1 w-full px-3 py-3 rounded-md hover:bg-hoveredButton',
+        chat.chatId.toString() === getChatId() && 'bg-hoveredButton'
       )}
     >
       <Avatar className='flex justify-center items-center'>
-        <AvatarImage src={DEFAULT_IMAGE} alt={chat.chatName ?? ''} width={6} height={6} className='w-10 h-10 ' />
+        <AvatarImage
+          src={chat.image || DEFAULT_IMAGE}
+          alt={chat.chatName ?? ''}
+          width={6}
+          height={6}
+          className='w-10 h-10 '
+        />
       </Avatar>
       <div className='flex flex-col justify-center max-w-28 ml-4'>
-        <span className='font-bold'>{chat.chatName}</span>
+        <span className='font-bold text-zinc-300'>{chat.chatName}</span>
       </div>
     </Link>
   )

@@ -1,5 +1,5 @@
 import AuthGuard from '@/auth/auth-guard'
-import ChatLayout from '@/components/app/chat-view/chat-layout'
+import ChatLayout from '@/components/chat/chat-layout'
 import React from 'react'
 
 export default function Layout({

@@ -1,6 +1,5 @@
-import SideBarComponent from '@/components/app/chat-view/side-bar/side-bar-component'
+import SideBarComponent from '@/components/side-bar/side-bar-component'
 import { getChats } from '@/services/chats'
-import { Suspense } from 'react'
 
 export default async function Page() {
   const res = await getChats()

@@ -4,8 +4,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { MessageSended } from '@/types/chats'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
-import ChatBottombar from './chat-bottom-bar'
+import ChatBottombar from '../input-area/chat-bottom-bar'
 import { DEFAULT_IMAGE } from '@/_mocks/chat-list'
+import { getRandomLightColor } from '@/utils/style'
 
 interface ChatListProps {
   messages?: MessageSended[]
@@ -27,7 +28,10 @@ export function ChatList({ messages: data }: ChatListProps) {
   }, [messages])
 
   return (
-    <div className='w-full overflow-y-auto overflow-x-hidden h-full flex flex-col'>
+    <div
+      style={{ backgroundImage: `url('/images/BG.jpeg')` }}
+      className='w-full overflow-y-auto overflow-x-hidden h-full flex flex-col'
+    >
       <div ref={messagesContainerRef} className='w-full overflow-y-auto overflow-x-hidden h-full flex flex-col'>
         <AnimatePresence>
           {messages?.map((message, index) => (
@@ -62,12 +66,16 @@ export function ChatList({ messages: data }: ChatListProps) {
                 )}
                 <span
                   className={cn(
-                    'bg-gray-300 p-3 rounded-md max-w-xs flex flex-col gap-1',
-                    message.username === 'kris' && 'bg-blue-400'
+                    'bg-otherUserMessage p-3 rounded-md max-w-xs flex flex-col gap-1',
+                    message.username === 'kris' && 'bg-loggedUserMessage'
                   )}
                 >
-                  <span className='font-semibold'>{message.username}</span>
-                  {message.message}
+                  {message.username !== 'kris' && (
+                    <span style={{ color: getRandomLightColor() }} className={`font-semibold`}>
+                      {message.username}
+                    </span>
+                  )}
+                  <p className='text-zinc-300'>{message.message}</p>
                 </span>
                 {message.username === 'kris' && (
                   <Avatar className='flex justify-center items-center'>
