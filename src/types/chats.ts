@@ -1,9 +1,6 @@
 export type ChatMini = {
-  id: number
-  name: string
-  picture: string
-  lastMessage: string
-  pendingMessages: number
+  chatId: bigint
+  chatName: string | null
 }
 
 export type Chat = {

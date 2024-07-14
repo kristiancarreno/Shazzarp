@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import React from 'react'
+import AuthProvider from '@/auth/auth-provider'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -15,9 +16,11 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className='w-full flex flex-col' id='body'>
-        <main className='flex'>
-          <div className='w-screen'>{children}</div>
-        </main>
+        <AuthProvider>
+          <main className='flex'>
+            <div className='w-screen'>{children}</div>
+          </main>
+        </AuthProvider>
       </body>
     </html>
   )

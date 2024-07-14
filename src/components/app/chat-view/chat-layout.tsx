@@ -3,13 +3,15 @@ import SideBarComponent from '@/components/app/chat-view/side-bar/side-bar-compo
 import React from 'react'
 
 export default function ChatLayout({
-  children
+  children,
+  sidebar
 }: Readonly<{
   children: React.ReactNode
+  sidebar: React.ReactNode
 }>) {
   return (
     <main className='flex flex-1  w-screen '>
-      <SideBarComponent chatList={chatList} />
+      {sidebar}
       <div className='max-w-screen-2xl w-full'>{children}</div>
     </main>
   )
