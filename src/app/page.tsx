@@ -1,4 +1,4 @@
-import Login from '@/components/app/login-component'
+import Login from '@/components/auth/login-component'
 import React from 'react'
 
 export default function Page() {

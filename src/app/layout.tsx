@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className='w-full flex flex-col' id='body'>
+      <body className='w-full flex flex-col bg-customDarkGray' id='body'>
         <AuthProvider>
           <main className='flex'>
             <div className='w-screen'>{children}</div>
