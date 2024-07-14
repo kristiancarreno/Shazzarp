@@ -15,12 +15,12 @@ export const EmojiPicker = ({ onChange }: EmojiPickerProps) => {
   return (
     <Popover>
       <PopoverTrigger>
-        <SmileIcon className='h-5 w-5 text-muted-foreground hover:text-foreground transition' />
+        <SmileIcon color='white' className='h-5 w-5 text-muted-foreground hover:text-foreground transition' />
       </PopoverTrigger>
-      <PopoverContent className='w-full'>
+      <PopoverContent className='w-full bg-transparent border-0'>
         <Picker
           emojiSize={18}
-          theme='light'
+          theme='dark'
           data={data}
           maxFrequentRows={1}
           onEmojiSelect={(emoji: any) => onChange(emoji.native)}

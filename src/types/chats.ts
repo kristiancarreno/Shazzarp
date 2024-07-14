@@ -1,6 +1,7 @@
 export type ChatMini = {
   chatId: bigint
   chatName: string | null
+  image: string
 }
 
 export type Chat = {

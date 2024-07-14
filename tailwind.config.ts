@@ -26,6 +26,14 @@ const config = {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out'
+      },
+      colors: {
+        customDarkGray: '#2c2c2c',
+        customLightGray: '#f8f8f8',
+        hoveredButton: '#3a3a3a',
+        loggedUserMessage: '#005c4b',
+        otherUserMessage: '#353535',
+        lightBlack: '#3d3d3d'
       }
     }
   },

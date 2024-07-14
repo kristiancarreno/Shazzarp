@@ -72,10 +72,10 @@ export default function ChatBottombar({ sendMessage }: ChatBottombarProps) {
               className={cn(
                 buttonVariants({ variant: 'ghost', size: 'icon' }),
                 'h-9 w-9',
-                'dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white'
+                'dark:bg-muted dark:text-muted-foreground hover:bg-hoveredButton'
               )}
             >
-              <PlusCircle size={20} className='text-muted-foreground' />
+              <PlusCircle color='white' size={20} className='text-muted-foreground' />
             </Link>
           </PopoverTrigger>
           <PopoverContent side='top' className='w-full p-2'>
@@ -86,10 +86,10 @@ export default function ChatBottombar({ sendMessage }: ChatBottombarProps) {
                   className={cn(
                     buttonVariants({ variant: 'ghost', size: 'icon' }),
                     'h-9 w-9',
-                    'dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white'
+                    'dark:bg-muted dark:text-muted-foreground hover:bg-hoveredButton'
                   )}
                 >
-                  <Mic size={20} className='text-muted-foreground' />
+                  <Mic color='white' size={20} className='text-muted-foreground' />
                 </Link>
                 {BottombarIcons.map((icon, index) => (
                   <Link
@@ -98,10 +98,10 @@ export default function ChatBottombar({ sendMessage }: ChatBottombarProps) {
                     className={cn(
                       buttonVariants({ variant: 'ghost', size: 'icon' }),
                       'h-9 w-9',
-                      'dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white'
+                      'dark:bg-muted dark:text-muted-foreground hover:bg-hoveredButton'
                     )}
                   >
-                    <icon.icon size={20} className='text-muted-foreground' />
+                    <icon.icon color='white' size={20} className='text-muted-foreground' />
                   </Link>
                 ))}
               </div>
@@ -111,10 +111,10 @@ export default function ChatBottombar({ sendMessage }: ChatBottombarProps) {
                 className={cn(
                   buttonVariants({ variant: 'ghost', size: 'icon' }),
                   'h-9 w-9',
-                  'dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white'
+                  'dark:bg-muted dark:text-muted-foreground hover:bg-hoveredButton'
                 )}
               >
-                <Mic size={20} className='text-muted-foreground' />
+                <Mic color='white' size={20} className='text-muted-foreground' />
               </Link>
             )}
           </PopoverContent>
@@ -128,10 +128,10 @@ export default function ChatBottombar({ sendMessage }: ChatBottombarProps) {
                 className={cn(
                   buttonVariants({ variant: 'ghost', size: 'icon' }),
                   'h-9 w-9',
-                  'dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white'
+                  'dark:bg-muted dark:text-muted-foreground hover:bg-hoveredButton'
                 )}
               >
-                <icon.icon size={20} className='text-muted-foreground' />
+                <icon.icon color='white' size={20} className='text-muted-foreground' />
               </Link>
             ))}
           </div>
@@ -162,7 +162,7 @@ export default function ChatBottombar({ sendMessage }: ChatBottombarProps) {
             onChange={handleInputChange}
             name='message'
             placeholder='Aa'
-            className=' w-full border rounded-full flex items-center h-9 resize-none overflow-hidden bg-background'
+            className='w-full border rounded-full ring-offset-hoveredButton flex items-center h-9 resize-none overflow-hidden bg-background bg-customDarkGray border-hoveredButton text-zinc-300 target:border-hoveredButton'
           />
           <div className='absolute right-2 top-2'>
             <EmojiPicker
@@ -187,7 +187,7 @@ export default function ChatBottombar({ sendMessage }: ChatBottombarProps) {
             )}
             onClick={handleSend}
           >
-            <SendHorizontal size={20} className='text-muted-foreground' />
+            <SendHorizontal color='white' size={20} className='text-muted-foreground' />
           </Link>
         ) : (
           <Link
@@ -195,11 +195,11 @@ export default function ChatBottombar({ sendMessage }: ChatBottombarProps) {
             className={cn(
               buttonVariants({ variant: 'ghost', size: 'icon' }),
               'h-9 w-9',
-              'dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white shrink-0'
+              'dark:bg-muted dark:text-muted-foreground hover:bg-hoveredButton shrink-0'
             )}
             onClick={handleThumbsUp}
           >
-            <ThumbsUp size={20} className='text-muted-foreground' />
+            <ThumbsUp color='white' size={20} className='text-muted-foreground' />
           </Link>
         )}
       </AnimatePresence>
