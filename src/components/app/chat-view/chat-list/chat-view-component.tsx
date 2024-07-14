@@ -9,7 +9,7 @@ export type Props = {
 
 function ChatViewComponent({ chat }: Props) {
   return (
-    <div className='flex flex-col w-full h-screen px-5 justify-between border-l-2'>
+    <div className='flex flex-col w-full h-screen px-5 justify-between'>
       <ChatTopbar selectedUser={chat.userFriend} />
       <ChatList messages={chat.messages} />
     </div>
