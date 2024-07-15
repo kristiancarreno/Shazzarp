@@ -4,7 +4,7 @@ import React from 'react'
 import AuthProvider from '@/auth/auth-provider'
 
 export const metadata: Metadata = {
-  title: 'Shazapp',
+  title: 'Shazzapp',
   description: 'Full Stack Project Chat App',
   icons: '/shazzap.svg'
 }
