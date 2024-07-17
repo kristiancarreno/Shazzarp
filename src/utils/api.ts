@@ -1,4 +1,4 @@
-import { ApiError, ApiResponse } from '@/types/api'
+import { ApiError, ApiResponse, ApiResponseData } from '@/types/api'
 
 export function formatErrorMessage(err: ApiError): string {
   return JSON.stringify(err, Object.getOwnPropertyNames(err))
@@ -36,9 +36,10 @@ export const handleApiServerError = async <T>(response: Response): Promise<ApiRe
 
 export const fetcher = (url: string) => fetch(url).then((r) => r.json())
 
-export const buildApiResponseAsync = async <T>(data: T): Promise<ApiResponse<T>> => {
+export const buildApiResponseAsync = async <T>(awaitable: Promise<T>): Promise<ApiResponse<T>> => {
   try {
-    return await Promise.resolve({ data, error: false, status: 200 })
+    const data = await awaitable
+    return Promise.resolve({ data: data, error: false, status: 200 })
   } catch (e) {
     if (isApiError(e)) {
       return { ...e, title: e.title, error: true }

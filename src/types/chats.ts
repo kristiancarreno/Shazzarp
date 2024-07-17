@@ -4,6 +4,10 @@ export type ChatMini = {
   image: string | null
 }
 
+export type ChatListResponse = {
+  data: ChatMini[]
+}
+
 export type Chat = {
   id: number
   picture: string
