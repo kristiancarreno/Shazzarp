@@ -39,3 +39,9 @@ export type CookieData = {
   value: string
   expires: string
 }
+
+export interface ApiResponseData<T> {
+  data: T
+  error: boolean
+  status: number
+}

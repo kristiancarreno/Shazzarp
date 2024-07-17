@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Chats {
-  chatId   BigInt    @id @default(autoincrement())
+  chatId   String    @id @default(cuid())
   chatName String    @unique
   messages Message[]
   image    String?
@@ -22,7 +22,7 @@ model Chats {
 
 model Message {
   messageId BigInt  @id @default(autoincrement())
-  chatId    BigInt
+  chatId    String
   userId    String
   message   String?
 

@@ -64,7 +64,7 @@ function SideBarComponent({ chatList }: Props) {
               autoComplete='off'
               name='message'
               placeholder='Aa'
-              prependIcon={<Search color='white' size={20} />}
+              prependicon={<Search color='white' size={20} />}
               className='w-full border rounded-md flex items-center h-9 resize-none overflow-hidden bg-transparent border-none text-zinc-300 target:border-none'
             />
           </div>
