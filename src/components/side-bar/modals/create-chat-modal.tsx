@@ -10,11 +10,40 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useToast } from '@/components/ui/use-toast'
+import { createChat } from '@/services/chats'
+import { revalidateServerTags } from '@/utils/cache'
 import { SquarePen } from 'lucide-react'
+import { useState } from 'react'
 
 export function CreateChatModal() {
+  const [name, setName] = useState('')
+  const [open, setOpen] = useState(false)
+  const { toast } = useToast()
+  const createNewChat = async () => {
+    try {
+      const { data, error } = await createChat(name, '')
+
+      if (error || !data) {
+        throw new Error('Hubo un error al crear el chat')
+      }
+      toast({
+        description: 'Chat creado correctamente',
+        variant: 'default'
+      })
+      revalidateServerTags('chats')
+      setOpen(false)
+    } catch (e) {
+      console.log(e)
+      toast({
+        description: 'Hubo un error al crear el chat',
+        variant: 'destructive'
+      })
+    }
+  }
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen} defaultOpen>
       <DialogTrigger asChild>
         <Button className='hover:bg-hoveredButton' variant={'link'}>
           <SquarePen color='white' size={20} />
@@ -32,11 +61,17 @@ export function CreateChatModal() {
             <Label htmlFor='name' className='text-left text-zinc-300'>
               Name
             </Label>
-            <Input id='name' placeholder='Escribe un nombre' className='w-full' />
+            <Input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              id='name'
+              placeholder='Escribe un nombre'
+              className='w-full'
+            />
           </div>
         </div>
         <DialogFooter>
-          <Button className='w-full' type='submit'>
+          <Button onClick={createNewChat} className='w-full' type='submit'>
             Crear
           </Button>
         </DialogFooter>
