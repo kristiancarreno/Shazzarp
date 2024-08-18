@@ -22,7 +22,7 @@ export function CreateChatModal() {
   const { toast } = useToast()
   const createNewChat = async () => {
     try {
-      const { data, error } = await createChat(name, '')
+      const { data, error } = await createChat(name, `http://gravatar.com/avatar/${name}?d=identicon`)
 
       if (error || !data) {
         throw new Error('Hubo un error al crear el chat')
@@ -31,7 +31,6 @@ export function CreateChatModal() {
         description: 'Chat creado correctamente',
         variant: 'default'
       })
-      revalidateServerTags('chats')
       setOpen(false)
     } catch (e) {
       console.log(e)
