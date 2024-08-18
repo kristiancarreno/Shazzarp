@@ -8,26 +8,20 @@ import ChatBottombar from '../input-area/chat-bottom-bar'
 import { DEFAULT_IMAGE } from '@/_mocks/chat-list'
 import { getRandomLightColor } from '@/utils/style'
 import { useSession } from 'next-auth/react'
+import { sendMessageToChat } from '@/services/message'
 
 interface ChatListProps {
   messages?: MessageSended[]
+  chatId: string
 }
 
-export function ChatList({ messages: data }: ChatListProps) {
+export function ChatList({ messages: data, chatId }: ChatListProps) {
   const messagesContainerRef = useRef<HTMLDivElement>(null)
-  const [messages, setMessages] = useState(data ?? [])
   const { data: session } = useSession()
 
-  const sendMessage = (newMessage: MessageSended) => {
-    messages.push(newMessage)
-    setMessages(messages)
+  const sendMessage = (newMessage: { message: string }) => {
+    sendMessageToChat(chatId, session?.user.id ?? '', newMessage.message)
   }
-
-  useEffect(() => {
-    if (messagesContainerRef.current) {
-      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight
-    }
-  }, [messages])
 
   return (
     <div
@@ -36,7 +30,7 @@ export function ChatList({ messages: data }: ChatListProps) {
     >
       <div ref={messagesContainerRef} className='w-full overflow-y-auto overflow-x-hidden h-full flex flex-col'>
         <AnimatePresence>
-          {messages?.map((message, index) => (
+          {data?.map((message, index) => (
             <motion.div
               key={index}
               layout
@@ -48,7 +42,7 @@ export function ChatList({ messages: data }: ChatListProps) {
                 layout: {
                   type: 'spring',
                   bounce: 0.3,
-                  duration: messages.indexOf(message) * 0.05 + 0.2
+                  duration: data.indexOf(message) * 0.05 + 0.2
                 }
               }}
               style={{

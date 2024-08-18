@@ -3,7 +3,6 @@ import Link from 'next/link'
 import React, { useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { AnimatePresence, motion } from 'framer-motion'
-import { MessageSended } from '@/types/chats'
 import { DEFAULT_IMAGE } from '@/_mocks/chat-list'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { buttonVariants } from '@/components/ui/button'
@@ -11,7 +10,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { EmojiPicker } from './emoji-picker'
 
 interface ChatBottombarProps {
-  sendMessage: (newMessage: MessageSended) => void
+  sendMessage: (newMessage: { message: string }) => void
 }
 
 export const BottombarIcons = [{ icon: FileImage }, { icon: Paperclip }]
@@ -25,9 +24,7 @@ export default function ChatBottombar({ sendMessage }: ChatBottombarProps) {
   }
 
   const handleThumbsUp = () => {
-    const newMessage: MessageSended = {
-      username: 'kris',
-      avatar: DEFAULT_IMAGE,
+    const newMessage = {
       message: '👍'
     }
     sendMessage(newMessage)
@@ -36,9 +33,7 @@ export default function ChatBottombar({ sendMessage }: ChatBottombarProps) {
 
   const handleSend = () => {
     if (message.trim()) {
-      const newMessage: MessageSended = {
-        username: 'kris',
-        avatar: DEFAULT_IMAGE,
+      const newMessage = {
         message: message.trim()
       }
       sendMessage(newMessage)

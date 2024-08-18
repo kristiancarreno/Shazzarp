@@ -4,6 +4,7 @@ import { toast } from '@/components/ui/use-toast'
 import { deleteChat } from '@/services/chats'
 import { revalidateServerTags } from '@/utils/cache'
 import { EllipsisVertical, Info, Trash } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 type Props = {
@@ -11,6 +12,7 @@ type Props = {
 }
 
 function DropdownChatMenu({ id }: Props) {
+  const router = useRouter()
   const deleteChatFromList = async () => {
     try {
       const { error } = await deleteChat(id)
@@ -21,6 +23,7 @@ function DropdownChatMenu({ id }: Props) {
         description: 'Chat eliminado correctamente',
         variant: 'default'
       })
+      router.push('/chat-view')
       revalidateServerTags('chats')
     } catch (e) {
       console.log(e)

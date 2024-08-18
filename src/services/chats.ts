@@ -46,7 +46,8 @@ export async function getChatDetails(chatId: string): Promise<ApiResponse<ChatDe
     method: 'GET',
     next: {
       tags: ['chat']
-    }
+    },
+    cache: 'no-store'
   })
 
   if (res.status !== 200) return handleApiServerError(res)
