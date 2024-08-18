@@ -2,6 +2,7 @@ import nextAuth, { NextAuthOptions } from 'next-auth'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import GitHubProvider from 'next-auth/providers/github'
 import prisma from '../../../../../lib/prisma'
+import { User } from '@prisma/client'
 
 const authOptions: NextAuthOptions = {
   providers: [
@@ -14,7 +15,13 @@ const authOptions: NextAuthOptions = {
   callbacks: {
     async session({ session, user }) {
       if (session.user) {
-        session.user.name = user.name
+        const newUser = {} as User
+        newUser.email = user.email || ''
+        newUser.image = user.image || ''
+        newUser.name = user.name || ''
+        newUser.id = user.id || ''
+        session.user = newUser
+        return session
       }
       return session
     }
