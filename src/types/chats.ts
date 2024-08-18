@@ -1,5 +1,5 @@
 export type ChatMini = {
-  chatId: bigint
+  chatId: string
   chatName: string
   image: string | null
 }
@@ -8,11 +8,15 @@ export type ChatListResponse = {
   data: ChatMini[]
 }
 
+export type ChatDetailsResponse = {
+  data: Chat
+}
+
 export type Chat = {
-  id: number
-  picture: string
+  chatId: string
+  chatName: string
+  image: string | null
   messages: MessageSended[]
-  userFriend: User
 }
 
 export type User = {
@@ -21,7 +25,19 @@ export type User = {
 }
 
 export type MessageSended = {
-  username: string
-  message: string
-  avatar?: string
+  messageId: string
+  chatId: string | null
+  userId: string | null
+  message: string | null
+  user: ChatUser
+}
+
+export type ChatUser = {
+  id: string | null
+  name: string | null
+  email: string | null
+  emailVerified: Date | null
+  image?: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }

@@ -9,6 +9,7 @@ import { Tooltip, TooltipProvider, TooltipTrigger } from '@radix-ui/react-toolti
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
+import DropdownChatMenu from '../dropdown-menu/menu'
 
 type Props = {
   chat: ChatMini
@@ -21,14 +22,43 @@ function ChatComponent({ chat, isMobile }: Props) {
     const match = path.match(/\/chat-view\/(\d+)/)
     return match ? match[1] : null
   }
-  return isMobile ? (
-    <TooltipProvider>
-      <Tooltip delayDuration={0}>
-        <TooltipTrigger asChild>
+  return (
+    <>
+      {isMobile ? (
+        <TooltipProvider>
+          <Tooltip delayDuration={0}>
+            <TooltipTrigger asChild>
+              <Link
+                href={`/chat-view/${chat.chatId}`}
+                className={cn(
+                  'h-12 w-full flex justify-center items-center md:h-16 md:w-16 dark:bg-muted dark:text-muted-foreground hover:bg-hoveredButton rounded-md',
+                  chat.chatId.toString() === getChatId() && 'bg-hoveredButton'
+                )}
+              >
+                <Avatar className='flex justify-center items-center'>
+                  <AvatarImage
+                    src={chat.image || DEFAULT_IMAGE}
+                    alt={chat.chatName ?? ''}
+                    width={6}
+                    height={6}
+                    className='w-10 h-10 '
+                  />
+                </Avatar>{' '}
+                <span className='sr-only'>{chat.chatName}</span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side='right' className='flex items-center gap-4'>
+              {chat.chatName}
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      ) : (
+        <div className='flex  w-full px-3 py-3 rounded-md items-center'>
           <Link
+            key={chat.chatId}
             href={`/chat-view/${chat.chatId}`}
             className={cn(
-              'h-12 w-full flex justify-center items-center md:h-16 md:w-16 dark:bg-muted dark:text-muted-foreground hover:bg-hoveredButton rounded-md',
+              'flex gap-1 w-full px-3 py-3 rounded-md hover:bg-hoveredButton',
               chat.chatId.toString() === getChatId() && 'bg-hoveredButton'
             )}
           >
@@ -40,37 +70,17 @@ function ChatComponent({ chat, isMobile }: Props) {
                 height={6}
                 className='w-10 h-10 '
               />
-            </Avatar>{' '}
-            <span className='sr-only'>{chat.chatName}</span>
+            </Avatar>
+            <div className='flex w-full justify-between items-center ml-4'>
+              <span className='font-bold text-zinc-300'>{chat.chatName}</span>
+            </div>
           </Link>
-        </TooltipTrigger>
-        <TooltipContent side='right' className='flex items-center gap-4'>
-          {chat.chatName}
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  ) : (
-    <Link
-      key={chat.chatId}
-      href={`/chat-view/${chat.chatId}`}
-      className={cn(
-        'flex gap-1 w-full px-3 py-3 rounded-md hover:bg-hoveredButton',
-        chat.chatId.toString() === getChatId() && 'bg-hoveredButton'
+          <div className='flex justify-center items-center'>
+            <DropdownChatMenu id={chat.chatId} />
+          </div>
+        </div>
       )}
-    >
-      <Avatar className='flex justify-center items-center'>
-        <AvatarImage
-          src={chat.image || DEFAULT_IMAGE}
-          alt={chat.chatName ?? ''}
-          width={6}
-          height={6}
-          className='w-10 h-10 '
-        />
-      </Avatar>
-      <div className='flex flex-col justify-center max-w-28 ml-4'>
-        <span className='font-bold text-zinc-300'>{chat.chatName}</span>
-      </div>
-    </Link>
+    </>
   )
 }
 

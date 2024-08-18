@@ -7,6 +7,7 @@ import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import ChatBottombar from '../input-area/chat-bottom-bar'
 import { DEFAULT_IMAGE } from '@/_mocks/chat-list'
 import { getRandomLightColor } from '@/utils/style'
+import { useSession } from 'next-auth/react'
 
 interface ChatListProps {
   messages?: MessageSended[]
@@ -15,6 +16,7 @@ interface ChatListProps {
 export function ChatList({ messages: data }: ChatListProps) {
   const messagesContainerRef = useRef<HTMLDivElement>(null)
   const [messages, setMessages] = useState(data ?? [])
+  const { data: session } = useSession()
 
   const sendMessage = (newMessage: MessageSended) => {
     messages.push(newMessage)
@@ -55,31 +57,41 @@ export function ChatList({ messages: data }: ChatListProps) {
               }}
               className={cn(
                 'flex flex-col gap-2 p-4 whitespace-pre-wrap',
-                message.username === 'kris' ? 'items-end' : 'items-start'
+                message.user.name === session?.user?.name ? 'items-end' : 'items-start'
               )}
             >
               <div className='flex gap-3 items-center'>
-                {message.username !== 'kris' && (
+                {message.user.name !== session?.user?.name && (
                   <Avatar className='flex justify-center items-center'>
-                    <AvatarImage src={message.avatar || DEFAULT_IMAGE} alt={message.username} width={6} height={6} />
+                    <AvatarImage
+                      src={message.user.image || DEFAULT_IMAGE}
+                      alt={message.user.name ?? ''}
+                      width={6}
+                      height={6}
+                    />
                   </Avatar>
                 )}
                 <span
                   className={cn(
                     'bg-otherUserMessage p-3 rounded-md max-w-xs flex flex-col gap-1',
-                    message.username === 'kris' && 'bg-loggedUserMessage'
+                    message.user.name === session?.user?.name && 'bg-loggedUserMessage'
                   )}
                 >
-                  {message.username !== 'kris' && (
+                  {message.user.name !== session?.user?.name && (
                     <span style={{ color: getRandomLightColor() }} className={`font-semibold`}>
-                      {message.username}
+                      {message.user.name}
                     </span>
                   )}
                   <p className='text-zinc-300'>{message.message}</p>
                 </span>
-                {message.username === 'kris' && (
+                {message.user.name === session?.user?.name && (
                   <Avatar className='flex justify-center items-center'>
-                    <AvatarImage src={message.avatar || DEFAULT_IMAGE} alt={message.username} width={6} height={6} />
+                    <AvatarImage
+                      src={message.user.image || DEFAULT_IMAGE}
+                      alt={message.user.name ?? ''}
+                      width={6}
+                      height={6}
+                    />
                   </Avatar>
                 )}
               </div>

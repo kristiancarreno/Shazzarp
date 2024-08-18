@@ -2,15 +2,16 @@
 import React, { useEffect, useState } from 'react'
 import { ChatMini } from '@/types/chats'
 import Link from 'next/link'
-import { LogOut, MoreHorizontal, Outdent, Search, SquarePen } from 'lucide-react'
-import { cn } from '@/lib/utils'
-import { Button, buttonVariants } from '@/components/ui/button'
+import { LogOut, Search } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import ChatComponent from './chats/chat-component'
 import { signOut } from 'next-auth/react'
 import AppIco from '@/assets/app-ico'
 import { Textarea } from '../ui/textarea'
 import { CreateChatModal } from './modals/create-chat-modal'
 import { LeftDrawer } from './drawer/left-drawer'
+import supabase from '@/utils/supabase'
+import { revalidateServerTags } from '@/utils/cache'
 
 type Props = {
   chatList: ChatMini[]
@@ -27,6 +28,18 @@ function SideBarComponent({ chatList }: Props) {
     window.addEventListener('resize', checkScreenWidth)
     return () => {
       window.removeEventListener('resize', checkScreenWidth)
+    }
+  }, [])
+
+  useEffect(() => {
+    const channel = supabase
+      .channel('realtime Chats')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'Chats' }, () => {
+        revalidateServerTags('chats')
+      })
+      .subscribe()
+    return () => {
+      supabase.removeChannel(channel)
     }
   }, [])
 
