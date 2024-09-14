@@ -15,13 +15,13 @@ export async function getChats(): Promise<ApiResponse<ChatListResponse>> {
   return buildApiResponseAsync<ChatListResponse>(res.json())
 }
 
-export async function createChat(chatName: string, image: string): Promise<ApiResponse<ChatMini>> {
+export async function createChat(chatName: string, description: string, image: string): Promise<ApiResponse<ChatMini>> {
   const res = await fetch(`/api/chat-list/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ chatName, image })
+    body: JSON.stringify({ chatName, description, image })
   })
 
   if (res.status !== 200) return handleApiServerError(res)

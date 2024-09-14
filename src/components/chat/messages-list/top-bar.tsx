@@ -3,15 +3,16 @@ import { Info, Phone, Video } from 'lucide-react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
-import { buttonVariants } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { Chat, User } from '@/types/chats'
 import { DEFAULT_IMAGE } from '@/_mocks/chat-list'
+import ChatDetailsModal from '@/components/side-bar/modals/chat-details-modal'
 
 interface ChatTopbarProps {
   selectedChat: Chat
 }
 
-export const TopbarIcons = [{ icon: Phone }, { icon: Video }, { icon: Info }]
+export const TopbarIcons = [{ icon: Info }]
 
 export default function ChatTopbar({ selectedChat }: ChatTopbarProps) {
   return (
@@ -19,32 +20,20 @@ export default function ChatTopbar({ selectedChat }: ChatTopbarProps) {
       <div className='flex items-center gap-2'>
         <Avatar className='flex justify-center items-center'>
           <AvatarImage
-            src={selectedChat.image || DEFAULT_IMAGE}
-            alt={selectedChat.chatName}
+            src={selectedChat?.image || DEFAULT_IMAGE}
+            alt={selectedChat?.chatName}
             width={6}
             height={6}
             className='w-10 h-10 '
           />
         </Avatar>
         <div className='flex flex-col'>
-          <span className='font-bold text-zinc-300'>{selectedChat.chatName}</span>
+          <span className='font-bold text-zinc-300'>{selectedChat?.chatName}</span>
         </div>
       </div>
 
       <div>
-        {TopbarIcons.map((icon, index) => (
-          <Link
-            key={index}
-            href='#'
-            className={cn(
-              buttonVariants({ variant: 'ghost', size: 'icon' }),
-              'h-9 w-9',
-              'dark:bg-muted dark:text-muted-foreground hover:bg-hoveredButton'
-            )}
-          >
-            <icon.icon color='white' size={20} className='text-muted-foreground' />
-          </Link>
-        ))}
+        <ChatDetailsModal chat={{ ...selectedChat, messages: selectedChat.messages.length }} />
       </div>
     </div>
   )

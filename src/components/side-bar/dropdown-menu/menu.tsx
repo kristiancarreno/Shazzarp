@@ -13,26 +13,26 @@ type Props = {
 
 function DropdownChatMenu({ id }: Props) {
   const router = useRouter()
-  const deleteChatFromList = async () => {
-    try {
-      const { error } = await deleteChat(id)
-      if (error) {
-        throw new Error('Hubo un error al eliminar el chat')
-      }
-      toast({
-        description: 'Chat eliminado correctamente',
-        variant: 'default'
-      })
-      router.push('/chat-view')
-      revalidateServerTags('chats')
-    } catch (e) {
-      console.log(e)
-      toast({
-        description: 'Hubo un error al eliminar el chat',
-        variant: 'destructive'
-      })
-    }
-  }
+  // const deleteChatFromList = async () => {
+  //   try {
+  //     const { error } = await deleteChat(id)
+  //     if (error) {
+  //       throw new Error('Hubo un error al eliminar el chat')
+  //     }
+  //     toast({
+  //       description: 'Chat eliminado correctamente',
+  //       variant: 'default'
+  //     })
+  //     router.push('/chat-view')
+  //     revalidateServerTags('chats')
+  //   } catch (e) {
+  //     console.log(e)
+  //     toast({
+  //       description: 'Hubo un error al eliminar el chat',
+  //       variant: 'destructive'
+  //     })
+  //   }
+  // }
 
   return (
     <DropdownMenu>
@@ -44,12 +44,6 @@ function DropdownChatMenu({ id }: Props) {
           <div className='flex cursor-pointer items-center gap-2'>
             <Info size={20} />
             <span className='text-lg font-semibold'>Info</span>
-          </div>
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={deleteChatFromList}>
-          <div className='flex cursor-pointer items-center gap-2'>
-            <Trash size={20} color='red' />
-            <span className='text-lg font-semibold text-red-500'>Delete</span>
           </div>
         </DropdownMenuItem>
       </DropdownMenuContent>

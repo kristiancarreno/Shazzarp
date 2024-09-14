@@ -7,6 +7,12 @@ const nextConfig = {
         hostname: 'static.vecteezy.com',
         port: '',
         pathname: '/**'
+      },
+      {
+        protocol: 'http',
+        hostname: 'gravatar.com',
+        port: '',
+        pathname: '/**'
       }
     ]
   }

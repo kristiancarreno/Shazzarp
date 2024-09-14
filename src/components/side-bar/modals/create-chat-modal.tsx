@@ -10,33 +10,53 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
 import { useToast } from '@/components/ui/use-toast'
 import { createChat } from '@/services/chats'
-import { revalidateServerTags } from '@/utils/cache'
 import { SquarePen } from 'lucide-react'
 import { useState } from 'react'
+import { Bounce, toast } from 'react-toastify'
 
 export function CreateChatModal() {
   const [name, setName] = useState('')
+  const [description, setDescription] = useState('')
   const [open, setOpen] = useState(false)
-  const { toast } = useToast()
   const createNewChat = async () => {
     try {
-      const { data, error } = await createChat(name, `http://gravatar.com/avatar/${name}?d=identicon`)
-
+      const { data, error, ...rest } = await createChat(
+        name,
+        description,
+        `http://gravatar.com/avatar/${name}?d=identicon`
+      )
       if (error || !data) {
         throw new Error('Hubo un error al crear el chat')
       }
-      toast({
-        description: 'Chat creado correctamente',
-        variant: 'default'
+      toast.success('Chat Creado', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce
       })
+      setName('')
+      setDescription('')
       setOpen(false)
     } catch (e) {
       console.log(e)
-      toast({
-        description: 'Hubo un error al crear el chat',
-        variant: 'destructive'
+      toast.error('Hubo un error al crear el chat', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce
       })
     }
   }
@@ -55,10 +75,10 @@ export function CreateChatModal() {
             Crea un nuevo chat para que todos los miembros puedan acceder.
           </DialogDescription>
         </DialogHeader>
-        <div className='grid gap-4 py-4'>
+        <div className='flex flex-col gap-4 py-4'>
           <div className='flex flex-col items-start gap-2'>
             <Label htmlFor='name' className='text-left text-zinc-300'>
-              Name
+              Name *
             </Label>
             <Input
               value={name}
@@ -66,8 +86,13 @@ export function CreateChatModal() {
               id='name'
               placeholder='Escribe un nombre'
               className='w-full'
+              required
             />
           </div>
+          <Label htmlFor='name' className='text-left text-zinc-300'>
+            Description
+          </Label>
+          <Textarea autoComplete='off' value={description} onChange={(e) => setDescription(e.target.value)} />
         </div>
         <DialogFooter>
           <Button onClick={createNewChat} className='w-full' type='submit'>

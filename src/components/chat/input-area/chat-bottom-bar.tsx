@@ -61,18 +61,6 @@ export default function ChatBottombar({ sendMessage }: ChatBottombarProps) {
     <div className='p-2 flex justify-between w-full items-center gap-2'>
       <div className='flex'>
         <Popover>
-          <PopoverTrigger asChild>
-            <Link
-              href='#'
-              className={cn(
-                buttonVariants({ variant: 'ghost', size: 'icon' }),
-                'h-9 w-9',
-                'dark:bg-muted dark:text-muted-foreground hover:bg-hoveredButton'
-              )}
-            >
-              <PlusCircle color='white' size={20} className='text-muted-foreground' />
-            </Link>
-          </PopoverTrigger>
           <PopoverContent side='top' className='w-full p-2'>
             {message.trim() ? (
               <div className='flex gap-2'>
@@ -114,23 +102,6 @@ export default function ChatBottombar({ sendMessage }: ChatBottombarProps) {
             )}
           </PopoverContent>
         </Popover>
-        {!message.trim() && (
-          <div className='flex'>
-            {BottombarIcons.map((icon, index) => (
-              <Link
-                key={index}
-                href='#'
-                className={cn(
-                  buttonVariants({ variant: 'ghost', size: 'icon' }),
-                  'h-9 w-9',
-                  'dark:bg-muted dark:text-muted-foreground hover:bg-hoveredButton'
-                )}
-              >
-                <icon.icon color='white' size={20} className='text-muted-foreground' />
-              </Link>
-            ))}
-          </div>
-        )}
       </div>
 
       <AnimatePresence initial={false}>

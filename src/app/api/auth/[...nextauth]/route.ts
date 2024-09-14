@@ -24,6 +24,9 @@ const authOptions: NextAuthOptions = {
         return session
       }
       return session
+    },
+    async redirect() {
+      return '/chat-view'
     }
   },
   adapter: PrismaAdapter(prisma)
@@ -31,4 +34,4 @@ const authOptions: NextAuthOptions = {
 
 const handler = nextAuth(authOptions)
 
-export { handler as GET, handler as POST, authOptions }
+export { handler as GET, handler as POST }

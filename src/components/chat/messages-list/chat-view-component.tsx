@@ -26,7 +26,7 @@ function ChatViewComponent({ chat }: Props) {
   return (
     <div className='flex flex-col w-full h-screen justify-between'>
       <ChatTopbar selectedChat={chat} />
-      <ChatList messages={chat.messages} chatId={chat.chatId} />
+      <ChatList messages={chat?.messages} chatId={chat?.chatId} />
     </div>
   )
 }

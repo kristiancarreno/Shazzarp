@@ -1,5 +1,6 @@
 import { ChatMini } from '@/types/chats'
 import { NextResponse } from 'next/server'
+import prisma from '../../../../lib/prisma'
 
 export async function GET() {
   const data = await prisma.chats.findMany()
@@ -11,13 +12,14 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const { chatName, image }: ChatMini = await request.json()
+    const { chatName, description, image }: ChatMini = await request.json()
     if (!chatName) {
       return NextResponse.json({ error: 'chatName and image are required' }, { status: 400 })
     }
     const newChat = await prisma.chats.create({
       data: {
         chatName,
+        description,
         image
       }
     })

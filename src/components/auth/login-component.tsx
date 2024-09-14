@@ -6,11 +6,26 @@ import React from 'react'
 import Link from 'next/link'
 import { signIn, useSession } from 'next-auth/react'
 import { CheckCheck, GithubIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { Bounce, toast } from 'react-toastify'
 
 export default function Login() {
   const { status } = useSession()
-  const singIn = () => {
-    signIn('github')
+  const singIn = async () => {
+    const result = await signIn('github')
+    if (!result?.error) {
+      toast.success('Sesion Inciada Exitosamente', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce
+      })
+    }
   }
   return (
     <div className='flex min-h-[100dvh] items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8 '>

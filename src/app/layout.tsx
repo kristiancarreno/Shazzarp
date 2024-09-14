@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import React from 'react'
 import AuthProvider from '@/auth/auth-provider'
-import { Toaster } from '@/components/ui/toaster'
+import { ToastContainer, toast } from 'react-toastify'
 
 export const metadata: Metadata = {
   title: 'Shazzapp',
@@ -22,7 +22,7 @@ export default function RootLayout({
           <main className='flex'>
             <div className='w-screen'>{children}</div>
           </main>
-          <Toaster />
+          <ToastContainer />
         </AuthProvider>
       </body>
     </html>

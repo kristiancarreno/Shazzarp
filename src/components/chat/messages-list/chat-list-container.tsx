@@ -1,6 +1,6 @@
 'use client'
 import { cn } from '@/lib/utils'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { MessageSended } from '@/types/chats'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
@@ -9,6 +9,8 @@ import { DEFAULT_IMAGE } from '@/_mocks/chat-list'
 import { getRandomLightColor } from '@/utils/style'
 import { useSession } from 'next-auth/react'
 import { sendMessageToChat } from '@/services/message'
+import { Bounce, toast } from 'react-toastify'
+import { revalidateServerTags } from '@/utils/cache'
 
 interface ChatListProps {
   messages?: MessageSended[]
@@ -19,10 +21,36 @@ export function ChatList({ messages: data, chatId }: ChatListProps) {
   const messagesContainerRef = useRef<HTMLDivElement>(null)
   const { data: session } = useSession()
 
-  const sendMessage = (newMessage: { message: string }) => {
-    sendMessageToChat(chatId, session?.user.id ?? '', newMessage.message)
+  const sendMessage = async (newMessage: { message: string }) => {
+    try {
+      const res = await sendMessageToChat(chatId, session?.user.id ?? '', newMessage.message)
+      if (res.error) {
+        throw new Error('Error al enviar el mensaje')
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error('Error al enviar el mensaje', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce
+      })
+    }
   }
-
+  useEffect(() => {
+    if (messagesContainerRef.current) {
+      const { scrollHeight, clientHeight } = messagesContainerRef.current
+      messagesContainerRef.current.scrollTo({
+        top: scrollHeight - clientHeight,
+        behavior: 'smooth'
+      })
+    }
+  }, [data])
   return (
     <div
       style={{ backgroundImage: `url('/images/BG.jpeg')` }}

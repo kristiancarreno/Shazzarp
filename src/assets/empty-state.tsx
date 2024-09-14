@@ -1,13 +1,20 @@
 import React from 'react'
 
-function EmptyState() {
+type Props = {
+  width?: number
+  height?: number
+  className?: string
+}
+
+function EmptyState({ width = 600, height = 400, className }: Props) {
   return (
     <svg
       id='f6c15c6b-0d43-4c3e-97ea-25ec8b04d58e'
       data-name='Layer 1'
       xmlns='http://www.w3.org/2000/svg'
-      width='600'
-      height='400'
+      width={width}
+      height={height}
+      className={className}
       viewBox='0 0 865.76 682.89'
     >
       <g id='ac8342b2-1fe9-4e48-9097-aa23177b80f6' data-name='freesvgillustration--background-complete--inject-5'>

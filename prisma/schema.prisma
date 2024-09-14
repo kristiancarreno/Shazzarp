@@ -10,6 +10,7 @@ datasource db {
 model Chats {
   chatId   String    @id @default(cuid())
   chatName String    @unique
+  description String?
   image    String?
   messages Message[]
 }

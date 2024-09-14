@@ -10,6 +10,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 import DropdownChatMenu from '../dropdown-menu/menu'
+import ChatDetailsModal from '../modals/chat-details-modal'
 
 type Props = {
   chat: ChatMini
@@ -76,7 +77,7 @@ function ChatComponent({ chat, isMobile }: Props) {
             </div>
           </Link>
           <div className='flex justify-center items-center'>
-            <DropdownChatMenu id={chat.chatId} />
+            <ChatDetailsModal chat={chat} />
           </div>
         </div>
       )}
