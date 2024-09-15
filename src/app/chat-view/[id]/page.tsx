@@ -4,7 +4,7 @@ import { getChatDetails } from '@/services/chats'
 import React from 'react'
 
 export default async function Home({ params }: { params: { id: string } }) {
-  const { data: chat, error } = await getChatDetails(params.id)
-  if (error) return
-  return chat ? <ChatViewComponent chat={chat.data} /> : <ErrorStateComponent />
+  const chat = await getChatDetails(params.id)
+
+  return chat ? <ChatViewComponent chat={chat} /> : <ErrorStateComponent />
 }

@@ -1,18 +1,16 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { ChatMini } from '@/types/chats'
-import { List, LogOut, Search } from 'lucide-react'
+import { LogOut } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import ChatComponent from './chats/chat-component'
 import { signOut } from 'next-auth/react'
 import AppIco from '@/assets/app-ico'
-import { Textarea } from '../ui/textarea'
 import { CreateChatModal } from './modals/create-chat-modal'
 import { LeftDrawer } from './drawer/left-drawer'
 import supabase from '@/utils/supabase'
-import { revalidateServerTags } from '@/utils/cache'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
+import { revalidateServerPath } from '@/utils/cache'
 
 type Props = {
   chatList: ChatMini[]
@@ -37,7 +35,7 @@ function SideBarComponent({ chatList }: Props) {
     const channel = supabase
       .channel('realtime Chats')
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'Chats' }, () => {
-        revalidateServerTags('chats')
+        revalidateServerPath('/chat-view/@sidebar')
       })
       .subscribe()
     return () => {

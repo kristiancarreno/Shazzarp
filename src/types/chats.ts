@@ -1,7 +1,7 @@
 export type ChatMini = {
   chatId: string
   chatName: string
-  description?: string
+  description?: string | null
   messages?: number
   image: string | null
 }
@@ -17,7 +17,7 @@ export type ChatDetailsResponse = {
 export type Chat = {
   chatId: string
   chatName: string
-  description?: string
+  description?: string | null
   image: string | null
   messages: MessageSended[]
 }

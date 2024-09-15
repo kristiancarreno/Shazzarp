@@ -1,55 +1,39 @@
-import { ChatDetailsResponse, ChatListResponse, ChatMini } from '@/types/chats'
-import { buildApiResponseAsync, handleApiServerError } from '@/utils/api'
-import { ApiResponse } from '@/types/api'
+'use server'
+import { Chat, ChatMini } from '@/types/chats'
+import prisma from '../../lib/prisma'
 
-export async function getChats(): Promise<ApiResponse<ChatListResponse>> {
-  const res = await fetch(`${process.env.NEXTHOST_URL}/api/chat-list/`, {
-    method: 'GET',
-    next: {
-      tags: ['chats']
-    },
-    cache: 'no-store'
+export async function getChats(): Promise<ChatMini[]> {
+  const res = await prisma.chats.findMany({
+    include: {
+      messages: true
+    }
   })
-
-  if (res.status !== 200) return handleApiServerError(res)
-  return buildApiResponseAsync<ChatListResponse>(res.json())
+  const result = res.map((chat) => ({
+    ...chat,
+    messages: chat.messages.length
+  }))
+  return result
 }
 
-export async function createChat(chatName: string, description: string, image: string): Promise<ApiResponse<ChatMini>> {
-  const res = await fetch(`/api/chat-list/`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ chatName, description, image })
+export async function createChat(chatName: string, description: string, image: string): Promise<ChatMini> {
+  const newChat = await prisma.chats.create({
+    data: {
+      chatName,
+      description,
+      image
+    }
   })
-
-  if (res.status !== 200) return handleApiServerError(res)
-  return buildApiResponseAsync<ChatMini>(res.json())
+  return newChat
 }
 
-export async function deleteChat(chatId: string): Promise<ApiResponse<ChatMini>> {
-  const res = await fetch(`/api/chat-list/`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json'
+export async function getChatDetails(chatId: string): Promise<Chat | null> {
+  const chatWithMessages = await prisma.chats.findUnique({
+    where: {
+      chatId: chatId ?? ''
     },
-    body: JSON.stringify({ chatId })
+    include: {
+      messages: { include: { user: true } }
+    }
   })
-
-  if (res.status !== 200) return handleApiServerError(res)
-  return buildApiResponseAsync<ChatMini>(res.json())
-}
-
-export async function getChatDetails(chatId: string): Promise<ApiResponse<ChatDetailsResponse>> {
-  const res = await fetch(`${process.env.NEXTHOST_URL}/api/chat-details/?chatId=${chatId}`, {
-    method: 'GET',
-    next: {
-      tags: ['chat']
-    },
-    cache: 'no-store'
-  })
-
-  if (res.status !== 200) return handleApiServerError(res)
-  return buildApiResponseAsync<ChatDetailsResponse>(res.json())
+  return chatWithMessages
 }

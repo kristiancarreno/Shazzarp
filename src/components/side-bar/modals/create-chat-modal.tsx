@@ -11,7 +11,6 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import { useToast } from '@/components/ui/use-toast'
 import { createChat } from '@/services/chats'
 import { SquarePen } from 'lucide-react'
 import { useState } from 'react'
@@ -23,12 +22,11 @@ export function CreateChatModal() {
   const [open, setOpen] = useState(false)
   const createNewChat = async () => {
     try {
-      const { data, error, ...rest } = await createChat(
-        name,
-        description,
-        `http://gravatar.com/avatar/${name}?d=identicon`
-      )
-      if (error || !data) {
+      const randomNumber = Math.floor(Math.random() * 1000) + 1
+
+      const res = await createChat(name, description, `http://gravatar.com/avatar/${randomNumber}?d=identicon`)
+
+      if (!res) {
         throw new Error('Hubo un error al crear el chat')
       }
       toast.success('Chat Creado', {

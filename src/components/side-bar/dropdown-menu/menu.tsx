@@ -1,7 +1,6 @@
 'use client'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { toast } from '@/components/ui/use-toast'
-import { deleteChat } from '@/services/chats'
 import { revalidateServerTags } from '@/utils/cache'
 import { EllipsisVertical, Info, Trash } from 'lucide-react'
 import { useRouter } from 'next/navigation'

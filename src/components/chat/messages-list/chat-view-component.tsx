@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 import ChatTopbar from './top-bar'
 import { ChatList } from './chat-list-container'
 import supabase from '@/utils/supabase'
-import { revalidateServerTags } from '@/utils/cache'
+import { revalidateServerPath } from '@/utils/cache'
 
 export type Props = {
   chat: Chat
@@ -15,7 +15,7 @@ function ChatViewComponent({ chat }: Props) {
     const channel = supabase
       .channel(`chat-${chat.chatId}`)
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'Message' }, () => {
-        revalidateServerTags('chat')
+        revalidateServerPath('/chat-view/[id]')
       })
       .subscribe()
     return () => {

@@ -1,20 +1,17 @@
-import { ApiResponse } from '@/types/api'
+'use server'
 import { MessageSended } from '@/types/chats'
-import { buildApiResponseAsync, handleApiServerError } from '@/utils/api'
+import prisma from '../../lib/prisma'
 
-export async function sendMessageToChat(
-  chatId: string,
-  userId: string,
-  message: string
-): Promise<ApiResponse<MessageSended>> {
-  const res = await fetch(`/api/message/`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
+export async function sendMessageToChat(chatId: string, userId: string, message: string): Promise<MessageSended> {
+  const newMessage = await prisma.message.create({
+    data: {
+      chatId,
+      userId,
+      message
     },
-    body: JSON.stringify({ chatId, userId, message })
+    include: {
+      user: true
+    }
   })
-
-  if (res.status !== 200) return handleApiServerError(res)
-  return buildApiResponseAsync<MessageSended>(res.json())
+  return newMessage
 }

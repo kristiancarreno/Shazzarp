@@ -24,7 +24,7 @@ export function ChatList({ messages: data, chatId }: ChatListProps) {
   const sendMessage = async (newMessage: { message: string }) => {
     try {
       const res = await sendMessageToChat(chatId, session?.user.id ?? '', newMessage.message)
-      if (res.error) {
+      if (!res) {
         throw new Error('Error al enviar el mensaje')
       }
     } catch (error) {
