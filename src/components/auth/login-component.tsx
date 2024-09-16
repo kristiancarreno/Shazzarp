@@ -6,7 +6,6 @@ import React from 'react'
 import Link from 'next/link'
 import { signIn, useSession } from 'next-auth/react'
 import { CheckCheck, GithubIcon } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 import { Bounce, toast } from 'react-toastify'
 
 export default function Login() {
