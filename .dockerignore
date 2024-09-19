@@ -1,0 +1,10 @@
+
+.env.development
+.env.production
+!.env.example
+exports
+.cache
+build
+node_modules
+.next
+.vscode
